@@ -7,9 +7,9 @@ services:
       - 80:80
     deploy:
       mode: replicated
-      replicas: 1
-      placement:
-        constraints: [node.role == worker]
+      replicas: 2
+      # placement:
+      #   constraints: [node.role == worker]
     volumes:
       - "nfs-vol:/usr/share/nginx/html"
 
