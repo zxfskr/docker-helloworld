@@ -1,15 +1,20 @@
 # docker-helloworld
+
 安装docker
+
 ```
 bash install.sh --mirror Aliyun
 ```
 
 将当前用户添加到docker用户组,可以不用sudo运行docker
-```
+
+```bash
+
 sudo usermod -aG docker $USER
 ```
 
 安装docker-mechine
+
 ```
  base=https://github.com/docker/machine/releases/download/v0.16.0 &&
    sudo wget $base/docker-machine-$(uname -s)-$(uname -m) -O /usr/local/bin/docker-machine &&
@@ -17,9 +22,22 @@ sudo usermod -aG docker $USER
 ```
 
 安装docker-compose
+
 ```
 sudo wget https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+```
+
+使用虚拟机(需要先安装virtualbox):
+
+```
+docker-machine create --driver virtualbox myvm1
+
+# 执行一次命令
+docker-machine ssh myvm1 "ls"
+
+# 使用--native-ssh进入命令行
+docker-machine --native-ssh ssh myvm1
 ```
 
 使用 docker swarm
