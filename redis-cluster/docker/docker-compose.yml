@@ -4,6 +4,7 @@ services:
     image: redis:3.2.12
     restart: always
     container_name: redis-master
+    command: redis-server --requirepass 123456
     ports:
       - 6379:6379
 
@@ -13,7 +14,7 @@ services:
     container_name: redis-slave-1
     ports:
       - 6380:6379
-    command: redis-server --slaveof redis-master 6379
+    command: redis-server --slaveof redis-master 6379 --requirepass 123456 --masterauth 123456
 
   slave2:
     image: redis:3.2.12
@@ -21,5 +22,5 @@ services:
     container_name: redis-slave-2
     ports:
       - 6381:6379
-    command: redis-server --slaveof redis-master 6379
+    command: redis-server --slaveof redis-master 6379 --requirepass 123456 --masterauth 123456
 
