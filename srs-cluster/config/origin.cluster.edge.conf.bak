@@ -1,0 +1,20 @@
+# the config for srs origin-edge cluster
+# @see https://github.com/ossrs/srs/wiki/v3_EN_OriginCluster
+# @see full.conf for detail config.
+
+listen              1935;
+max_connections     1000;
+pid                 objs/edge.pid;
+daemon              off;
+srs_log_tank        console;
+vhost __defaultVhost__ {
+    # 边缘节点禁止推流
+    http_hooks {
+        enabled         on;
+        on_publish      http://null/null;
+    }
+    cluster {
+        mode            remote;
+        origin          127.0.0.1:19351 127.0.0.1:19350;
+    }
+}

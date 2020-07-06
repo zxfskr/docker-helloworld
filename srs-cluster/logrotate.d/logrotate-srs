@@ -1,0 +1,11 @@
+/usr/local/srs/objs/srs.log {
+    daily
+    dateext
+    compress
+    rotate 7
+    size 1K
+    sharedscripts
+    postrotate
+        kill -USR1 `cat /usr/local/srs/objs/srs.pid`
+    endscript
+}
