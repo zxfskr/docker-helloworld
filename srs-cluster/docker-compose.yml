@@ -15,36 +15,6 @@ services:
     - ./config/origin.cluster.serverA.conf:/usr/local/srs/conf/srs.conf
     # networks:
     # - fig-srs3
-  serverB:
-    # build: .
-    image: fig/srs3:latest
-    # restart: always
-    container_name: serverB
-    network_mode: "host"
-    # ports:
-    # - "19351:1935"
-    # - "19851:1985"
-    # - "8081:8080"
-    volumes:
-    - ./logrotate.d/logrotate-srs:/etc/logrotate.d/logrotate-srs
-    - ./config/origin.cluster.serverB.conf:/usr/local/srs/conf/srs.conf
-    # networks:
-    # - fig-srs3
-  serverC:
-    # build: .
-    image: fig/srs3:latest
-    # restart: always
-    container_name: serverC
-    network_mode: "host"
-    # ports:
-    # - "19352:1935"
-    # - "19852:1985"
-    # - "8082:8080"
-    volumes:
-    - ./logrotate.d/logrotate-srs:/etc/logrotate.d/logrotate-srs
-    - ./config/origin.cluster.serverC.conf:/usr/local/srs/conf/srs.conf
-    # networks:
-    # - fig-srs3
 
   edgeA:
     # build: .
@@ -59,54 +29,25 @@ services:
     volumes:
     - ./logrotate.d/logrotate-srs:/etc/logrotate.d/logrotate-srs
     - ./config/origin.cluster.edgeA.conf:/usr/local/srs/conf/srs.conf
+    - ./hls_share:/usr/local/srs/objs/nginx/html
     # networks:
     # - fig-srs3
 
-  edgeB:
+  nginx:
     # build: .
-    image: fig/srs3:latest
+    image: nginx
     # restart: always
-    container_name: edgeB
+    container_name: nginx
     network_mode: "host"
     # ports:
     # - "19352:1935"
     # - "19852:1985"
     # - "8082:8080"
     volumes:
-    - ./logrotate.d/logrotate-srs:/etc/logrotate.d/logrotate-srs
-    - ./config/origin.cluster.edgeB.conf:/usr/local/srs/conf/srs.conf
+    - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./hls_share:/etc/nginx/html
     # networks:
     # - fig-srs3
-
-  # haproxy:
-  #   # build: .
-  #   image: haproxy:1.7
-  #   # restart: always
-  #   container_name: haproxy
-  #   network_mode: "host"
-  #   # ports:
-  #   # - "19352:1935"
-  #   # - "19852:1985"
-  #   # - "8082:8080"
-  #   volumes:
-  #   - ./conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
-  #   # networks:
-  #   # - fig-srs3
-
-  # nginx:
-  #   # build: .
-  #   image: nginx
-  #   # restart: always
-  #   container_name: nginx
-  #   network_mode: "host"
-  #   # ports:
-  #   # - "19352:1935"
-  #   # - "19852:1985"
-  #   # - "8082:8080"
-  #   volumes:
-  #   - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
-  #   # networks:
-  #   # - fig-srs3
 
 # networks:
 #   fig-srs3:
